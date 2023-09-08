@@ -12,4 +12,5 @@
     <string name="back">Back</string>
     <string name="hint_search">Find video</string>
     <string name="logout_title">Logout</string>
+    <string name="channel_title">Channel Name</string>
 </resources>

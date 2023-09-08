@@ -42,11 +42,11 @@ class ProfileActivity : AppCompatActivity() {
         if (photoUrl != null) {
             Glide.with(this)
                 .load(photoUrl)
-                .apply(RequestOptions().error(R.drawable.ic_user))
+                .apply(RequestOptions().error(R.drawable.ic_user_40))
                 .into(binding.civUserPa)
         } else {
             Glide.with(this)
-                .load(R.drawable.ic_user)
+                .load(R.drawable.ic_user_40)
                 .into(binding.civUserPa)
         }
         binding.btnLogoutPa.setOnClickListener {

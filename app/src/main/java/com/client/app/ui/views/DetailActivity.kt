@@ -1,44 +1,43 @@
 package com.client.app.ui.views
 
-import android.net.Uri
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
+
 import androidx.appcompat.app.AppCompatActivity
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.client.app.R
 import com.client.app.data.api.MyRetrofitClient
 import com.client.app.data.api.VideoDetailApi
 import com.client.app.databinding.ActivityDetailBinding
 import com.client.app.domain.entities.DataDetailApi
 import com.client.app.domain.entities.Video
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.hls.HlsMediaSource
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
-    private var id = 0
-    private var player: SimpleExoPlayer? = null
+    private var player: ExoPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val id = intent.getIntExtra("ID_VIDEO", 0)
+        setupDataApiDA(this,id)
+        setActionDA()
+    }
+
+    private fun setActionDA(){
         binding.ivBackDa.setOnClickListener {
             finish()
         }
-        id = intent.getIntExtra("ID_VIDEO", 0)
-        setupVideoDetail()
-
     }
-
-    private fun setupVideoDetail() {
-
+    private fun setupDataApiDA(context: Context,id:Int) {
         val retrofit = MyRetrofitClient.createRetrofit()
         val videoService = retrofit.create(VideoDetailApi::class.java)
 
@@ -59,14 +58,16 @@ class DetailActivity : AppCompatActivity() {
                             data.videoImage,
                             data.videoMedia,
                             data.videoTime,
-                            data.videoTitle
+                            data.videoTitle,
+                            data.totalViews,
+                            data.totalLikes,
+                            data.totalShares,
+                            data.totalComments,
+                            data.channel,
+                            data.list_resolution
                         )
-                        binding.tvVideoTitleDa.text = video.videoTitle
-                        setExoPlayer(video.videoMedia)
-
+                        setViewDA(context,video)
                     }
-
-                } else {
                 }
             }
 
@@ -75,30 +76,39 @@ class DetailActivity : AppCompatActivity() {
         })
     }
 
-    private fun setExoPlayer(linkVideo: String) {
-        player = SimpleExoPlayer.Builder(this).build()
-        binding.playerView.player = player
-
-        val mediaSource = buildMediaSource(linkVideo)
-
-        Log.e("ExoPlayer1", linkVideo)
-
-        player?.setMediaSource(mediaSource)
-        player?.prepare()
-        player?.play()
-    }
-
-    private fun buildMediaSource(linkVideo: String): MediaSource {
-        val dataSourceFactory: DataSource.Factory =
-            DefaultDataSourceFactory(this, "exoplayer-sample")
-        return HlsMediaSource.Factory(dataSourceFactory)
-            .createMediaSource(MediaItem.fromUri(Uri.parse(linkVideo)))
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         player?.release()
         player = null
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setViewDA(context: Context, video: Video){
+        Glide.with(context)
+            .load(video.channel?.channelAvatar)
+            .apply(RequestOptions().error(R.drawable.ic_channel_40))
+            .into(binding.civChannelImageDa)
+        binding.tvVideoTitleDa.text = video.videoTitle
+        binding.tvChannelNameDa.text=video.channel?.channelName
+        binding.tvTotalLikesDa.text=convertNumber(video.totalLikes)+" likes"
+        binding.tvTotalCommentsDa.text=convertNumber(video.totalComments)+ " comments"
+        binding.tvTotalSharesDa.text=convertNumber(video.totalShares)+ " shares"
+        binding.tvTotalViewsDa.text=convertNumber(video.totalViews)+ " views"
+        setExoPlayerDA(video.videoMedia)
+    }
+    private fun  convertNumber(number:Int):String{
+        if(number>1000){
+            return (number/1000).toString()+"K"
+        }
+        return number.toString()
+    }
+    private fun setExoPlayerDA(linkVideo: String) {
+        player = ExoPlayer.Builder(this).build()
+        binding.playerView.player = player
+        val mediaItem = MediaItem.fromUri(linkVideo)
+
+        player!!.setMediaItem(mediaItem)
+        player!!.prepare()
     }
 
 }

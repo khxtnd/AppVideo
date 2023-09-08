@@ -5,6 +5,12 @@ data class Video(
     val isLike: Int,
     val videoImage: String,
     val videoMedia: String,
-    val videoTime: String,
-    val videoTitle: String
+    val videoTime: Int,
+    val videoTitle: String,
+    val totalViews: Int,
+    val totalLikes: Int,
+    val totalShares: Int,
+    val totalComments: Int,
+    val channel: Channel?,
+    val list_resolution: List<Resolution>?
 )

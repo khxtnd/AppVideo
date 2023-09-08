@@ -9,7 +9,6 @@ class MyRetrofitClient {
         private fun createOkHttpClient(): OkHttpClient {
             return OkHttpClient.Builder().addInterceptor { chain ->
                 val originalRequest = chain.request()
-                val url = originalRequest.url().toString()
                 val modifiedRequest = originalRequest.newBuilder()
                     .header("Accept-Language", "en-US")
                     .build()

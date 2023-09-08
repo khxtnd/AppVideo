@@ -61,11 +61,13 @@ class SearchActivity : AppCompatActivity() {
                         val videoSearch = it.data.map { data ->
                             Video(
                                 data.id,
-                                data.isLike,
+                                0,
                                 data.videoImage,
-                                data.videoMedia,
+                                "",
                                 data.videoTime,
-                                data.videoTitle
+                                data.videoTitle,
+                                0,0,0,0,
+                                null, null
                             )
                         }
                         val adapter = VideoListAdapter(onItemClick)

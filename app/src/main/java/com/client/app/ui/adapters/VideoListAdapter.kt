@@ -29,12 +29,12 @@ class VideoListAdapter(
         val item = list[position]
 
         holder.binding.tvVideoTitleVi.text = item.videoTitle
-        holder.binding.tvVideoTimeVi.text = item.videoTime
+        holder.binding.tvVideoTimeVi.text = convertToMinutesSeconds(item.videoTime)
 
         Glide.with(holder.binding.ivVi)
             .load(item.videoImage)
             .transform(RoundedCorners(16))
-            .apply(RequestOptions().error(R.drawable.ic_video))
+            .apply(RequestOptions().error(R.drawable.ic_video_40))
             .into(holder.binding.ivVi)
         holder.binding.layoutItemVideo.setOnClickListener {
             onClick(item)
@@ -46,6 +46,13 @@ class VideoListAdapter(
         this.list = list
         notifyDataSetChanged()
     }
+
+    fun convertToMinutesSeconds(seconds: Int): String {
+        val minutes = seconds / 60
+        val remainingSeconds = seconds % 60
+        return String.format("%02d:%02d", minutes, remainingSeconds)
+    }
+
 }
 
 class VideoListViewHolder(val binding: ItemVideoBinding) : RecyclerView.ViewHolder(binding.root)

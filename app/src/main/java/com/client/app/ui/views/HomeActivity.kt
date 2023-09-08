@@ -49,11 +49,11 @@ class HomeActivity : AppCompatActivity() {
         if (photoUrl != null) {
             Glide.with(this)
                 .load(photoUrl)
-                .apply(RequestOptions().error(R.drawable.ic_user))
+                .apply(RequestOptions().error(R.drawable.ic_user_40))
                 .into(binding.civProfileHa)
         } else {
             Glide.with(this)
-                .load(R.drawable.ic_user)
+                .load(R.drawable.ic_user_40)
                 .into(binding.civProfileHa)
         }
 
@@ -81,11 +81,14 @@ class HomeActivity : AppCompatActivity() {
                         val videoList = it.data.map { data ->
                             Video(
                                 data.id,
-                                data.isLike,
+                                0,
                                 data.videoImage,
-                                data.videoMedia,
+                                "",
                                 data.videoTime,
-                                data.videoTitle
+                                data.videoTitle,
+                                0,0,0,0,
+                                null,
+                                null
                             )
                         }
                         val adapter = VideoListAdapter(onItemClick)
@@ -108,7 +111,6 @@ class HomeActivity : AppCompatActivity() {
         intent.putExtra("ID_VIDEO", it.id)
         startActivity(intent)
     }
-
 }
 
 
