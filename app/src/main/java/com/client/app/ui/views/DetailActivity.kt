@@ -94,6 +94,9 @@ class DetailActivity : AppCompatActivity() {
         binding.tvTotalCommentsDa.text=convertNumber(video.totalComments)+ " comments"
         binding.tvTotalSharesDa.text=convertNumber(video.totalShares)+ " shares"
         binding.tvTotalViewsDa.text=convertNumber(video.totalViews)+ " views"
+        if (video.isLike==1){
+            binding.ivIsLikeDa.setImageResource(R.drawable.ic_like3_40)
+        }
         setExoPlayerDA(video.videoMedia)
     }
     private fun  convertNumber(number:Int):String{
@@ -109,6 +112,7 @@ class DetailActivity : AppCompatActivity() {
 
         player!!.setMediaItem(mediaItem)
         player!!.prepare()
+        player!!.play()
     }
 
 }
