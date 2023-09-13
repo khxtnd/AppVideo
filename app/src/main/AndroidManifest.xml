@@ -16,9 +16,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.views.PlayerActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.views.DetailActivity"
             android:exported="false" />
         <activity

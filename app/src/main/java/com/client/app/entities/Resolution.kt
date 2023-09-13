@@ -1,4 +1,4 @@
-package com.client.app.domain.entities
+package com.client.app.entities
 
 data class Resolution(
     val key: String,

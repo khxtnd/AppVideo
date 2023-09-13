@@ -7,14 +7,15 @@
     <ImageView
         android:id="@+id/iv_vi"
         android:layout_width="60dp"
-        android:layout_height="60dp"/>
+        android:layout_height="60dp"
+        android:importantForAccessibility="no" />
 
 
     <TextView
         android:layout_toEndOf="@id/iv_vi"
         android:layout_toStartOf="@id/tv_video_time_vi"
         android:textColor="@color/blue_violet"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -29,9 +30,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/violet"
-        android:textSize="15dp"
-        android:layout_marginRight="10dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="10dp"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:layout_gravity="center_vertical"/>
+        android:textSize="15sp" />
 </RelativeLayout>
