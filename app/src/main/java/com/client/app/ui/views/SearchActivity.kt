@@ -3,6 +3,7 @@ package com.client.app.ui.views
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.client.app.data.ApiInterface
@@ -25,22 +26,22 @@ class SearchActivity : AppCompatActivity() {
         binding.tvBackSa.setOnClickListener {
             finish()
         }
-        setRecycleViewSa()
-//        binding.searchViewSa.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-//            android.widget.SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                return false
-//            }
-//
-//            override fun onQueryTextChange(newText: String): Boolean {
-//                return true
-//            }
-//
-//        })
+        binding.searchViewSa.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                setRecycleViewSa(newText)
+                return true
+            }
+
+        })
 
     }
 
-    private fun setRecycleViewSa() {
+    private fun setRecycleViewSa(keySearch:String) {
         val apiInterface = ApiUtilities.getInstance().create(ApiInterface::class.java)
         val videoRepository = VideoRepository(apiInterface)
         val adapter = VideoListAdapter(onItemClick)
@@ -50,6 +51,7 @@ class SearchActivity : AppCompatActivity() {
             this,
             SearchViewModelFactory(videoRepository)
         )[SearchViewModel::class.java]
+        searchViewModel.search(keySearch)
         searchViewModel.videoSearch.observe(this) {
             adapter.setVideoList(it)
         }
