@@ -5,7 +5,6 @@ import com.client.app.data.api.VideoApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
 
 val BASE_URL="http://125.234.170.249/"

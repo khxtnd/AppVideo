@@ -42,7 +42,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun setRecycleViewSa() {
-        val adapter = VideoListAdapter {
+        adapter = VideoListAdapter {
             val intent = Intent(this@SearchActivity, DetailActivity::class.java)
             intent.putExtra("ID_VIDEO", it.id)
             startActivity(intent)

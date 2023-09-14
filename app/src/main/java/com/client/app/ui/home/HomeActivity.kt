@@ -2,6 +2,7 @@ package com.client.app.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -62,23 +63,30 @@ class HomeActivity : AppCompatActivity() {
         }
         setRecycleViewHa()
         observeData()
+        Log.e("HomeActivity", "onCreate")
+
     }
 
     private fun setRecycleViewHa() {
-        val adapter = VideoListAdapter {
+        adapter = VideoListAdapter {
             val intent = Intent(this@HomeActivity, DetailActivity::class.java)
             intent.putExtra("ID_VIDEO", it.id)
             startActivity(intent)
         }
         binding.recHa.layoutManager = LinearLayoutManager(this@HomeActivity)
         binding.recHa.adapter = adapter
+        Log.e("HomeActivity", "setRecycleViewHa")
+
     }
 
     private fun observeData() = with(homeViewModel) {
         videoHot.observe(this@HomeActivity) {
             val adapter = adapter ?: return@observe
             adapter.setVideoList(it)
+            Log.e("HomeActivity", it.size.toString())
         }
+        Log.e("HomeActivity", "observerData")
+
     }
 }
 

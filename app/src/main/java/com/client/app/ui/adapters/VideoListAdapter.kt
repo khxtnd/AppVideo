@@ -1,5 +1,6 @@
 package com.client.app.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -45,6 +46,8 @@ class VideoListAdapter(
     fun setVideoList(list: List<Video>) {
         this.list = list
         notifyDataSetChanged()
+        Log.e("VideoListAdapter",list.size.toString())
+
     }
 
     fun convertToMinutesSeconds(seconds: Int): String {
