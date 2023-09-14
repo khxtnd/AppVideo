@@ -8,7 +8,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.client.app.R
 import com.client.app.databinding.ItemVideoBinding
-import com.client.app.entities.Video
+import com.client.app.domain.entities.Video
 
 
 class VideoListAdapter(

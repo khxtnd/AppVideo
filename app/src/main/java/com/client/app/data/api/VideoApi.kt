@@ -1,41 +1,40 @@
-package com.client.app.data
+package com.client.app.data.api
 
 
-import com.client.app.entities.DataDetailApi
-import com.client.app.entities.DataListApi
-import retrofit2.Call
+import com.client.app.data.api.entities.AppResponse
+import com.client.app.domain.entities.Video
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface ApiInterface {
+interface VideoApi {
 
     @GET("video-service/v1/video/{id}/info")
-    fun getVideoDetail(
+    suspend fun getVideoDetail(
         @Path("id") id: Int,
         @Query("msisdn") msisdn: String,
         @Query("timestamp") timestamp: String,
         @Query("security") security: String,
-    ): Call<DataDetailApi>
+    ): AppResponse<Video>
 
     @GET("video-service/v1/video/hot")
-    fun getVideoHot(
+    suspend fun getVideoHot(
         @Query("msisdn") msisdn: String,
         @Query("timestamp") timestamp: String,
         @Query("security") security: String,
         @Query("page") page: Int,
         @Query("size") size: Int,
         @Query("lastHashId") lastHashId: String
-    ): Call<DataListApi>
+    ): AppResponse<List<Video>>
 
     @GET("video-service/v1/video/search/v2")
-    fun getVideoSearch(
+    suspend fun searchListVideo(
         @Query("msisdn") msisdn: String,
         @Query("timestamp") timestamp: String,
         @Query("security") security: String,
         @Query("page") page: Int,
         @Query("size") size: Int,
-        @Query("q") q: String,
+        @Query("q") keySearch: String,
         @Query("lastHashId") lastHashId: String
-    ): Call<DataListApi>
+    ): AppResponse<List<Video>>
 }

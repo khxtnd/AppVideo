@@ -1,4 +1,4 @@
-package com.client.app.ui.views
+package com.client.app.ui.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,14 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.client.app.R
-import com.client.app.data.ApiInterface
-import com.client.app.data.ApiUtilities
 import com.client.app.databinding.ActivityHomeBinding
-import com.client.app.entities.Video
-import com.client.app.repository.VideoRepository
+import com.client.app.di.HomeViewModelFactory
 import com.client.app.ui.adapters.VideoListAdapter
-import com.client.app.ui.viewmodels.HomeViewModel
-import com.client.app.ui.viewmodels.HomeViewModelFactory
+import com.client.app.ui.detail.DetailActivity
+import com.client.app.ui.search.SearchActivity
+import com.client.app.ui.views.ProfileActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -23,7 +21,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var homeViewModel: HomeViewModel
+    private val homeViewModel by lazy {
+        ViewModelProvider(this, HomeViewModelFactory())[HomeViewModel::class.java]
+    }
+
+    private var adapter: VideoListAdapter? = null
+
     private var gso: GoogleSignInOptions? = null
     private var gsc: GoogleSignInClient? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,27 +61,24 @@ class HomeActivity : AppCompatActivity() {
                 .into(binding.civProfileHa)
         }
         setRecycleViewHa()
+        observeData()
     }
 
     private fun setRecycleViewHa() {
-        val apiInterface = ApiUtilities.getInstance().create(ApiInterface::class.java)
-        val videoRepository = VideoRepository(apiInterface)
-        val adapter = VideoListAdapter(onItemClick)
-        binding.recHa.layoutManager = LinearLayoutManager(this@HomeActivity)
-        binding.recHa?.adapter = adapter
-        homeViewModel = ViewModelProvider(
-            this,
-            HomeViewModelFactory(videoRepository)
-        )[HomeViewModel::class.java]
-        homeViewModel.videoHot.observe(this) {
-            adapter.setVideoList(it)
+        val adapter = VideoListAdapter {
+            val intent = Intent(this@HomeActivity, DetailActivity::class.java)
+            intent.putExtra("ID_VIDEO", it.id)
+            startActivity(intent)
         }
+        binding.recHa.layoutManager = LinearLayoutManager(this@HomeActivity)
+        binding.recHa.adapter = adapter
     }
 
-    private val onItemClick: (Video) -> Unit = {
-        val intent = Intent(this@HomeActivity, DetailActivity::class.java)
-        intent.putExtra("ID_VIDEO", it.id)
-        startActivity(intent)
+    private fun observeData() = with(homeViewModel) {
+        videoHot.observe(this@HomeActivity) {
+            val adapter = adapter ?: return@observe
+            adapter.setVideoList(it)
+        }
     }
 }
 

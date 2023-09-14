@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/layout_ha"
-    tools:context=".ui.views.HomeActivity">
+    tools:context=".ui.home.HomeActivity">
 
 
     <RelativeLayout
@@ -46,7 +46,9 @@
         android:id="@+id/rec_ha"
         android:layout_marginStart="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rl_video_list_home" />
 </androidx.constraintlayout.widget.ConstraintLayout>

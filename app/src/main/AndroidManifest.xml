@@ -16,13 +16,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.views.DetailActivity"
+            android:name=".ui.detail.DetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.views.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.views.SearchActivity"
+            android:name=".ui.search.SearchActivity"
             android:exported="false" />
         <activity
             android:name=".ui.views.RegisterActivity"
@@ -37,7 +37,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.views.HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="false" />
     </application>
 

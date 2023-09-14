@@ -1,4 +1,4 @@
-package com.client.app.ui.views
+package com.client.app.ui.detail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -8,16 +8,14 @@ import androidx.media3.exoplayer.ExoPlayer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.client.app.R
-import com.client.app.data.ApiInterface
-import com.client.app.data.ApiUtilities
 import com.client.app.databinding.ActivityDetailBinding
-import com.client.app.repository.VideoRepository
-import com.client.app.ui.viewmodels.DetailViewModel
-import com.client.app.ui.viewmodels.DetailViewModelFactory
+import com.client.app.di.DetailViewModelFactory
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var detailViewModel: DetailViewModel
+    private val detailViewModel: DetailViewModel by lazy {
+        ViewModelProvider(this, DetailViewModelFactory())[DetailViewModel::class.java]
+    }
     private var player: ExoPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,19 +23,13 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val id = intent.getIntExtra("ID_VIDEO", 0)
-        setActionDA()
         setViewDA(id)
+        setActionDA()
     }
 
     private fun setViewDA(id:Int) {
-        val apiInterface = ApiUtilities.getInstance().create(ApiInterface::class.java)
-        val videoRepository = VideoRepository(apiInterface)
-        detailViewModel = ViewModelProvider(
-            this,
-            DetailViewModelFactory(videoRepository)
-        )[DetailViewModel::class.java]
         detailViewModel.setId(id)
-        detailViewModel.videoDetail.observe(this) {
+        detailViewModel.videoInfo.observe(this) {
             Glide.with(this)
                 .load(it.channel?.channelAvatar)
                 .apply(RequestOptions().error(R.drawable.ic_channel_40))
@@ -83,5 +75,4 @@ class DetailActivity : AppCompatActivity() {
         player!!.prepare()
         player!!.play()
     }
-
 }

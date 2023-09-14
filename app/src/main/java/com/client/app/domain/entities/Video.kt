@@ -1,4 +1,4 @@
-package com.client.app.entities
+package com.client.app.domain.entities
 
 data class Video(
     val id: Int,
