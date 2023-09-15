@@ -9,28 +9,42 @@
 
         <LinearLayout
             android:id="@+id/linear_sa"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/search_view_sa"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+            <LinearLayout
+                android:layout_width="320dp"
+                android:layout_height="50dp"
                 android:background="@drawable/bg_et_login"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:iconifiedByDefault="false"
-                android:queryHint="@string/hint_search" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_search_30" />
+
+                <EditText
+                    android:id="@+id/et_search_sa"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_search"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_back_sa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="10dp"
                 android:text="@string/back"
+                android:layout_marginLeft="5dp"
                 android:textColor="@color/violet"
                 android:textSize="25dp"
                 tools:ignore="HardcodedText,SpUsage,TextSizeCheck,TextContrastCheck" />

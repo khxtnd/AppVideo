@@ -16,7 +16,7 @@ class VideoListAdapter(
     private val onClick: (Video) -> Unit
 ) : RecyclerView.Adapter<VideoListViewHolder>() {
     private var list: List<Video> = listOf()
-
+    private val MAX_LENGTH = 25;
     override fun getItemCount(): Int {
         return list.size
     }
@@ -28,8 +28,11 @@ class VideoListAdapter(
 
     override fun onBindViewHolder(holder: VideoListViewHolder, position: Int) {
         val item = list[position]
-
-        holder.binding.tvVideoTitleVi.text = item.videoTitle
+        var title=item.videoTitle
+        if (title.length > MAX_LENGTH) {
+            title=title.subSequence(0, MAX_LENGTH).toString() +  "...";
+        }
+        holder.binding.tvVideoTitleVi.text = title
         holder.binding.tvVideoTimeVi.text = convertToMinutesSeconds(item.videoTime)
 
         Glide.with(holder.binding.ivVi)

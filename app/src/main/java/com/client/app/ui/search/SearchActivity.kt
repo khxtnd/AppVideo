@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.client.app.R
 import com.client.app.databinding.ActivitySearchBinding
 import com.client.app.di.SearchViewModelFactory
 import com.client.app.ui.adapters.VideoListAdapter
@@ -21,22 +23,13 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         binding.tvBackSa.setOnClickListener {
             finish()
         }
-        binding.searchViewSa.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-            android.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
 
-            override fun onQueryTextChange(newText: String): Boolean {
-                searchViewModel.search(newText)
-                return true
-            }
-
-        })
+        binding.etSearchSa.doAfterTextChanged {
+            searchViewModel.search(it?.toString() ?: "")
+        }
         setRecycleViewSa()
         observerData()
     }
