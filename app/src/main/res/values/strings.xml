@@ -13,4 +13,8 @@
     <string name="hint_search">Find video</string>
     <string name="logout_title">Logout</string>
     <string name="channel_title">Channel Name</string>
+    <string name="logout">Logout</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>
