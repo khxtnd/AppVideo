@@ -33,7 +33,6 @@ class HomeViewModel(private val getListVideoUseCase: GetListVideoUseCase) : View
                     lastHashId
                 )
             )
-            Log.e("HomeViewModel",listVideo.size.toString())
             postValue(listVideo)
         }
 

@@ -23,7 +23,6 @@ class VideoRepositoryImpl(private val videoApi: VideoApi):VideoRepository {
         size: Int,
         lastHashId: String
     ): List<Video> {
-        Log.e("VideoRepositoryImpl",videoApi.getVideoHot(msisdn, timestamp, security, page, size, lastHashId).data.size.toString())
         return  videoApi.getVideoHot(msisdn, timestamp, security, page, size, lastHashId).data
     }
 

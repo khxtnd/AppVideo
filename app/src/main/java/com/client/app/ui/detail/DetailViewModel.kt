@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 
 
 class DetailViewModel(private val getVideoInfoCase: GetVideoInfoCase) : ViewModel() {
+    private var currentPosition:Long=0
     private var videoId: LiveData<Int> = MediatorLiveData()
     val videoInfo: LiveData<Video> = MediatorLiveData<Video>().apply {
         addSource(videoId) {
@@ -35,5 +36,11 @@ class DetailViewModel(private val getVideoInfoCase: GetVideoInfoCase) : ViewMode
 
     fun setId(id: Int) {
         (videoId as MediatorLiveData).postValue(id)
+    }
+    fun setCurrentPosition(currentPosition: Long) {
+        this.currentPosition=currentPosition
+    }
+    fun getCurrentPosition() :Long{
+        return currentPosition
     }
 }

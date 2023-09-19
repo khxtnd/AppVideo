@@ -6,6 +6,31 @@
     android:background="#42000000">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:weightSum="8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_back_custom_exo"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_arrow_back_40_gray" />
+
+        <TextView
+            android:id="@+id/tv_title_custom_exo"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="7"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:orientation="horizontal"
         android:weightSum="3"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -14,16 +39,17 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
             android:layout_weight="1"
-            android:id="@+id/iv_replay_da"
+            android:id="@+id/iv_replay_custom_exo"
             android:src="@drawable/ic_replay_10_40"
             android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <ImageView
             android:layout_weight="1"
-            android:id="@+id/iv_play_da"
+            android:id="@+id/iv_play_custom_exo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_pause_circle_outline_60"
@@ -32,7 +58,7 @@
             android:layout_weight="1"
             android:src="@drawable/ic_forward_10_40"
             android:layout_gravity="center_vertical"
-            android:id="@+id/iv_forward_da"
+            android:id="@+id/iv_forward_custom_exo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -42,8 +68,18 @@
         android:id="@+id/iv_fullScreen_da"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:src="@drawable/ic_fullscreen_40"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_setting_custom_exo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:src="@drawable/ic_settings_35"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_fullScreen_da" />
 
     <androidx.media3.ui.DefaultTimeBar
         android:id="@id/exo_progress"
@@ -58,11 +94,10 @@
         app:unplayed_color="#80FFFFFF" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
@@ -78,11 +113,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
-            android:text=":"
+            android:text="@string/colon"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold" />
-
         <TextView
             android:id="@id/exo_duration"
             android:layout_width="wrap_content"

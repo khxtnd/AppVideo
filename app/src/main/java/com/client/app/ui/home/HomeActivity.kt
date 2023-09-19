@@ -43,6 +43,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setTheme(R.style.actionBarTheme)
+
         setContentView(binding.root)
         toggle = ActionBarDrawerToggle(this, binding.root, R.string.open, R.string.close)
         binding.root.addDrawerListener(toggle)
@@ -50,7 +51,6 @@ class HomeActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setViewNav()
-
         setRecycleViewHa()
         observeData()
 
@@ -59,7 +59,6 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setViewNav() {
         val headerView: View = binding.navView.getHeaderView(0)
-
         ivAvatarNav=headerView.findViewById(R.id.iv_avatar_Nav)
         tvUsernameNav=headerView.findViewById(R.id.tv_username_Nav)
         gso =
@@ -114,7 +113,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_search_actionbar,menu)
+        menuInflater.inflate(R.menu.actionbar_menu,menu)
         return super.onCreateOptionsMenu(menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

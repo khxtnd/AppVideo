@@ -49,8 +49,6 @@ class VideoListAdapter(
     fun setVideoList(list: List<Video>) {
         this.list = list
         notifyDataSetChanged()
-        Log.e("VideoListAdapter",list.size.toString())
-
     }
 
     fun convertToMinutesSeconds(seconds: Int): String {

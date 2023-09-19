@@ -3,34 +3,38 @@ package com.client.app.ui.detail
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
+import android.widget.PopupMenu
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.media3.common.C
 import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.ui.AspectRatioFrameLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.client.app.R
 import com.client.app.databinding.ActivityDetailBinding
-import com.client.app.databinding.CustomControllerBinding
 import com.client.app.di.DetailViewModelFactory
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
     private lateinit var binding: ActivityDetailBinding
     private val detailViewModel: DetailViewModel by lazy {
         ViewModelProvider(this, DetailViewModelFactory())[DetailViewModel::class.java]
     }
     private lateinit var player:ExoPlayer
 
-    private var isFullScreen = false
-
-
-    private lateinit var ivPlayDa :ImageView
-    private lateinit var ivReplayDa :ImageView
-    private lateinit var ivForwardDa :ImageView
-    private lateinit var ivFullScreenDa:ImageView
+    private lateinit var ivPlayCustomExo :ImageView
+    private lateinit var ivReplayCustomExo :ImageView
+    private lateinit var ivForwardCustomExo :ImageView
+    private lateinit var ivFullScreenCustomExo:ImageView
+    private lateinit var ivBackCustomExo:ImageView
+    private lateinit var ivSettingCustomExo:ImageView
+    private lateinit var tvTitleCustomExo:TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -40,16 +44,17 @@ class DetailActivity : AppCompatActivity() {
         setViewDA(id)
         setActionDA()
         initControlExo()
-
         setControlExo()
-
     }
 
     private fun initControlExo() {
-        ivPlayDa=findViewById(R.id.iv_play_da)
-        ivForwardDa=findViewById(R.id.iv_forward_da)
-        ivReplayDa=findViewById(R.id.iv_replay_da)
-        ivFullScreenDa=findViewById(R.id.iv_fullScreen_da)
+        ivPlayCustomExo=findViewById(R.id.iv_play_custom_exo)
+        ivForwardCustomExo=findViewById(R.id.iv_forward_custom_exo)
+        ivReplayCustomExo=findViewById(R.id.iv_replay_custom_exo)
+        ivFullScreenCustomExo=findViewById(R.id.iv_fullScreen_da)
+        ivBackCustomExo=findViewById(R.id.iv_back_custom_exo)
+        tvTitleCustomExo=findViewById(R.id.tv_title_custom_exo)
+        ivSettingCustomExo=findViewById(R.id.iv_setting_custom_exo)
     }
 
 
@@ -72,26 +77,56 @@ class DetailActivity : AppCompatActivity() {
     private fun setControlExo() {
         val orientation = this.resources.configuration.orientation
        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            ivFullScreenDa.setImageResource(R.drawable.ic_fullscreen_40)
+            ivFullScreenCustomExo.setImageResource(R.drawable.ic_fullscreen_40)
+            ivBackCustomExo.visibility=View.GONE
+            tvTitleCustomExo.visibility=View.GONE
         } else {
-            ivFullScreenDa.setImageResource(R.drawable.ic_fullscreen_exit_40)
+            ivFullScreenCustomExo.setImageResource(R.drawable.ic_fullscreen_exit_40)
+           detailViewModel.videoInfo.observe(this) {
+              tvTitleCustomExo.text=it.videoTitle
+           }
+
         }
-        ivPlayDa.setOnClickListener {
+        ivPlayCustomExo.setOnClickListener {
             if(player.isPlaying){
                 pauseVideo()
             }else{
                 playVideo()
             }
         }
-        ivFullScreenDa.setOnClickListener {
+        ivFullScreenCustomExo.setOnClickListener {
             requestedOrientation = if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                 ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
             } else {
                 ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
             }
+            detailViewModel.setCurrentPosition(player.currentPosition)
+        }
+        ivBackCustomExo.setOnClickListener {
+            finish()
         }
 
+        ivForwardCustomExo.setOnClickListener {
+            if(player.currentPosition+10000>=player.duration){
+                player.seekTo(0)
+            }else{
+                player.seekTo(player.currentPosition+10000)
+            }
+        }
+        ivReplayCustomExo.setOnClickListener {
+            if(player.currentPosition-10000<=0){
+                player.seekTo(0)
+            }else{
+                player.seekTo(player.currentPosition-10000)
+            }
+        }
+        ivSettingCustomExo.setOnClickListener {
+            player.pause()
+            ivPlayCustomExo.setImageResource(R.drawable.ic_play_circle_outline_60)
+            showMenuSetting(it)
+        }
     }
+
 
     private fun setActionDA() {
         binding.ivBackDa.setOnClickListener {
@@ -120,15 +155,67 @@ class DetailActivity : AppCompatActivity() {
         player.setMediaItem(mediaItem)
         player.prepare()
         player.play()
+        ivPlayCustomExo.setImageResource(R.drawable.ic_pause_circle_outline_60)
+        player.seekTo(detailViewModel.getCurrentPosition())
+        player.addListener(object : Player.Listener{
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                super.onPlaybackStateChanged(playbackState)
+                if(playbackState == Player.STATE_ENDED) {
+                    player.seekTo(0)
+                    player.play()
+                }
+            }
+        })
+        Log.e("setQaVideo",linkVideo)
+
+
     }
 
     private fun playVideo(){
-        ivPlayDa.setImageResource(R.drawable.ic_pause_circle_outline_60)
+        ivPlayCustomExo.setImageResource(R.drawable.ic_pause_circle_outline_60)
         player.play()
     }
     private fun pauseVideo(){
-        ivPlayDa.setImageResource(R.drawable.ic_play_circle_outline_60)
+        ivPlayCustomExo.setImageResource(R.drawable.ic_play_circle_outline_60)
         player.pause()
     }
+    private fun showMenuSetting(v:View){
+        val popupMenu=PopupMenu(this,v)
+        popupMenu.setOnMenuItemClickListener(this)
+        popupMenu.inflate(R.menu.setting_menu)
+        popupMenu.show()
+    }
+    override fun onMenuItemClick(p0: MenuItem?): Boolean {
+        when(p0?.itemId){
+            R.id.set_144p->{
+                setQaVideo(3)
+            }
+            R.id.set_240p->{
+                setQaVideo(2)
 
+            }
+            R.id.set_360p->{
+                setQaVideo(4)
+
+            }
+            R.id.set_480p->{
+                setQaVideo(1)
+
+            }
+            R.id.set_720p->{
+                setQaVideo(0)
+            }
+        }
+        return true
+    }
+
+    private fun setQaVideo(position:Int){
+        detailViewModel.videoInfo.observe(this) {
+            val linkVideo= it.list_resolution?.get(position)?.video_path
+            detailViewModel.setCurrentPosition(player.currentPosition)
+            player.release()
+            Log.e("setQaVideo",linkVideo.toString())
+            linkVideo?.let { it1 -> setExoPlayerDA(it1) }
+        }
+    }
 }

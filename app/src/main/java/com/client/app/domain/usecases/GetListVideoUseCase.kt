@@ -19,14 +19,6 @@ class GetListVideoUseCase(private val videoRepository: VideoRepository) :
     )
 
     override suspend fun invoke(param: Param): List<Video> {
-        Log.e("GetListVideoUseCase",videoRepository.getVideoHot(
-            param.msisdn,
-            param.timestamp,
-            param.security,
-            param.page,
-            param.size,
-            param.lastHashId
-        ).size.toString())
         return videoRepository.getVideoHot(
             param.msisdn,
             param.timestamp,

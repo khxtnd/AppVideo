@@ -17,4 +17,12 @@
     <string name="search">Tìm kiếm</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="colon">:</string>
+    <string name="quality">Quality</string>
+    <string name="qa_144">144p</string>
+    <string name="qa_240">240p</string>
+    <string name="qa_360">360p</string>
+    <string name="qa_480">480p</string>
+    <string name="qa_720">720p</string>
+
 </resources>
