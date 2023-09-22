@@ -14,7 +14,7 @@
     <string name="logout_title">Logout</string>
     <string name="channel_title">Channel Name</string>
     <string name="logout">Logout</string>
-    <string name="search">Tìm kiếm</string>
+    <string name="search">Find</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="colon">:</string>
@@ -24,5 +24,5 @@
     <string name="qa_360">360p</string>
     <string name="qa_480">480p</string>
     <string name="qa_720">720p</string>
-
+    <string name="delete_all">Delete All</string>
 </resources>

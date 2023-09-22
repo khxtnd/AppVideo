@@ -5,5 +5,6 @@
     <color name="blue_violet">#8A2BE2</color>
     <color name="violet">#EE82EE</color>
     <color name="medium_purple">#9370DB</color>
-    <string name="magenta">#FF00FF</string>
+    <color name="magenta">#FF00FF</color>
+    <color name="gray">#F6F0F0</color>
 </resources>

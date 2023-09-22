@@ -1,5 +1,7 @@
 package com.client.app.di
 
+import android.app.Application
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.client.app.ui.detail.DetailViewModel
@@ -11,9 +13,9 @@ class HomeViewModelFactory(): ViewModelProvider.Factory{
         return HomeViewModel(getListVideoUseCase) as T
     }
 }
-class SearchViewModelFactory(): ViewModelProvider.Factory{
+class SearchViewModelFactory(private val application: Application): ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return SearchViewModel(searchListVideoUseCase) as T
+        return SearchViewModel(searchListVideoUseCase,application) as T
     }
 }
 class DetailViewModelFactory(): ViewModelProvider.Factory{
