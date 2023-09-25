@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">App Video</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login_title">Login</string>
     <string name="register_title">Register</string>
     <string name="hint_username">Enter Username</string>
@@ -25,4 +23,6 @@
     <string name="qa_480">480p</string>
     <string name="qa_720">720p</string>
     <string name="delete_all">Delete All</string>
+    <string name="video_hot">Video Hot</string>
+    <string name="watch_history">Watch History</string>
 </resources>

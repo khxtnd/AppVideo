@@ -1,18 +1,19 @@
 package com.client.app.ui.home
 
-import android.util.Log
+import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.client.app.data.database.entities.WatchVideo
 import com.client.app.domain.entities.Video
+import com.client.app.domain.repositories.WatchVideoRepository
 import com.client.app.domain.usecases.GetListVideoUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class HomeViewModel(private val getListVideoUseCase: GetListVideoUseCase) : ViewModel() {
+class HomeViewModel(private val getListVideoUseCase: GetListVideoUseCase, application: Application) : ViewModel() {
     val videoHot: LiveData<List<Video>> = MutableLiveData<List<Video>>().apply {
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -37,5 +38,14 @@ class HomeViewModel(private val getListVideoUseCase: GetListVideoUseCase) : View
         }
 
     }
+    private val watchVideoRepository: WatchVideoRepository =
+        WatchVideoRepository(application)
+
+    fun deleteWatchHistory(watchVideo: WatchVideo) = viewModelScope.launch {
+        watchVideoRepository.deleteWatchVideo(watchVideo)
+    }
+
+    fun getAllWatchHistory(): LiveData<List<WatchVideo>> =
+        watchVideoRepository.getAllWatchVideo()
 
 }
