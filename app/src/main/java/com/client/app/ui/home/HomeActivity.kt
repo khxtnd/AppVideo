@@ -18,8 +18,8 @@ import com.client.app.R
 import com.client.app.data.database.entities.WatchVideo
 import com.client.app.databinding.ActivityHomeBinding
 import com.client.app.di.HomeViewModelFactory
-import com.client.app.ui.adapters.WatchHistoryAdapter
 import com.client.app.ui.adapters.VideoListAdapter
+import com.client.app.ui.adapters.WatchHistoryAdapter
 import com.client.app.ui.detail.DetailActivity
 import com.client.app.ui.search.SearchActivity
 import com.client.app.ui.views.LoginActivity
@@ -31,7 +31,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private val homeViewModel by lazy {
-        ViewModelProvider(this, HomeViewModelFactory(this.application))[HomeViewModel::class.java]
+        ViewModelProvider(this, HomeViewModelFactory())[HomeViewModel::class.java]
     }
 
     private var hotVideoAdapter: VideoListAdapter? = null

@@ -1,26 +1,25 @@
 package com.client.app.di
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.client.app.ui.detail.DetailViewModel
 import com.client.app.ui.home.HomeViewModel
 import com.client.app.ui.search.SearchViewModel
 
-class HomeViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
+class HomeViewModelFactory() : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return HomeViewModel(getListVideoUseCase, application) as T
+        return HomeViewModel(getListVideoUseCase, getWatchVideoUseCase) as T
     }
 }
 
-class SearchViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
+class SearchViewModelFactory() : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return SearchViewModel(searchListVideoUseCase, application) as T
+        return SearchViewModel(searchListVideoUseCase, searchHistoryUseCase) as T
     }
 }
 
-class DetailViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
+class DetailViewModelFactory() : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return DetailViewModel(getVideoInfoUseCase, application) as T
+        return DetailViewModel(getVideoInfoUseCase, getWatchVideoUseCase) as T
     }
 }

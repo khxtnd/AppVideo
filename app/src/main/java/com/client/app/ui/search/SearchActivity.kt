@@ -21,7 +21,7 @@ class SearchActivity : AppCompatActivity() {
     private val searchViewModel: SearchViewModel by lazy {
         ViewModelProvider(
             this,
-            SearchViewModelFactory(this.application)
+            SearchViewModelFactory()
         )[SearchViewModel::class.java]
     }
     private var adapterVideo: VideoListAdapter? = null

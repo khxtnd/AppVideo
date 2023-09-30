@@ -1,6 +1,5 @@
 package com.client.app.domain.usecases
 
-import android.util.Log
 import com.client.app.domain.entities.Video
 import com.client.app.domain.repositories.VideoRepository
 

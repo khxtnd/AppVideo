@@ -4,7 +4,6 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -25,7 +24,7 @@ import com.client.app.di.DetailViewModelFactory
 class DetailActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
     private lateinit var binding: ActivityDetailBinding
     private val detailViewModel: DetailViewModel by lazy {
-        ViewModelProvider(this, DetailViewModelFactory(this.application))[DetailViewModel::class.java]
+        ViewModelProvider(this, DetailViewModelFactory())[DetailViewModel::class.java]
     }
     private lateinit var player:ExoPlayer
 

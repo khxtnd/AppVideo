@@ -4,8 +4,8 @@ import com.client.app.domain.entities.Video
 import com.client.app.domain.repositories.VideoRepository
 
 
-class GetVideoInfoCase(private val videoRepository: VideoRepository) :
-    BaseUseCase<GetVideoInfoCase.Param, Video> {
+class GetVideoInfoUseCase(private val videoRepository: VideoRepository) :
+    BaseUseCase<GetVideoInfoUseCase.Param, Video> {
 
 
     data class Param(
