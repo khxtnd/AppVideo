@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/set_qa_video"
+        android:title="@string/quality">
+        <menu>
+            <item
+                android:id="@+id/set_144p"
+                android:title="@string/qa_144"
+                />
+            <item
+                android:id="@+id/set_240p"
+                android:title="@string/qa_240"
+                />
+            <item
+                android:id="@+id/set_360p"
+                android:title="@string/qa_360"
+                />
+            <item
+                android:id="@+id/set_480p"
+                android:title="@string/qa_480"
+                />
+            <item
+                android:id="@+id/set_720p"
+                android:title="@string/qa_720"
+                />
+        </menu>
+
+    </item>
+</menu>

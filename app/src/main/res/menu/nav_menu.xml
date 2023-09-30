@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+   <item
+       android:id="@+id/mVideoHot"
+       android:title="@string/video_hot"
+       android:icon="@drawable/ic_star_outline_40"
+       />
+    <item
+        android:id="@+id/mWatchHistory"
+        android:icon="@drawable/ic_history_40"
+        android:title="@string/watch_history"
+        />
+    <item android:id="@+id/mLogout"
+        android:title="@string/logout"
+        android:icon="@drawable/ic_exit_40"/>
+</menu>
