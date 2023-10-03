@@ -14,7 +14,14 @@ class HomeViewModelFactory() : ViewModelProvider.Factory {
 
 class SearchViewModelFactory() : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return SearchViewModel(searchListVideoUseCase, searchHistoryUseCase) as T
+        return SearchViewModel(
+            searchListVideoUseCase,
+            deleteAllSearchHistoryUseCase,
+            deleteSearchHistoryUseCase,
+            checkSearchHistoryExitedUseCase,
+            getAllSearchHistoryUseCase,
+            insertSearchHistoryUseCase
+        ) as T
     }
 }
 

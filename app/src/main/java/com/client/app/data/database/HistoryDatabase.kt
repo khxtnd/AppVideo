@@ -20,7 +20,7 @@ abstract class HistoryDatabase : RoomDatabase() {
         fun getInstance(context: Context): HistoryDatabase {
             if (instance == null) {
                 instance =
-                    Room.databaseBuilder(context, HistoryDatabase::class.java, "history_database")
+                    Room.databaseBuilder(context, HistoryDatabase::class.java, "history_database.db")
                         .build()
             }
             return instance!!

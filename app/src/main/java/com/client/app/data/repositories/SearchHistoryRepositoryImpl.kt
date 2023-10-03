@@ -1,17 +1,21 @@
 package com.client.app.data.repositories
 
 import android.app.Application
-import androidx.lifecycle.LiveData
+import android.content.Context
+import android.util.Log
 import com.client.app.data.database.HistoryDatabase
 import com.client.app.data.database.SearchHistoryDao
 import com.client.app.data.database.entities.SearchHistory
 import com.client.app.domain.repositories.SearchHistoryRepository
+import kotlinx.coroutines.flow.Flow
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 
-class SearchHistoryRepositoryImpl(application: Application) : SearchHistoryRepository {
+class SearchHistoryRepositoryImpl(context: Context) : SearchHistoryRepository {
     private val searchHistoryDao: SearchHistoryDao
 
     init {
-        val historyDatabase: HistoryDatabase = HistoryDatabase.getInstance(application)
+        val historyDatabase: HistoryDatabase = HistoryDatabase.getInstance(context)
         searchHistoryDao = historyDatabase.getSearchHistoryDao()
     }
 
@@ -23,7 +27,8 @@ class SearchHistoryRepositoryImpl(application: Application) : SearchHistoryRepos
         return searchHistoryDao.deleteSearchHistory(searchHistory)
     }
 
-    override fun getAllSearchHistory(): LiveData<List<SearchHistory>> {
+    override fun getAllSearchHistory(): Flow<List<SearchHistory>>{
+        Log.i("RepositoryImpl",searchHistoryDao.getAllSearchHistory().asLiveData().value?.size.toString())
         return searchHistoryDao.getAllSearchHistory()
     }
 

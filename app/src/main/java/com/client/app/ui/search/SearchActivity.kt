@@ -2,10 +2,12 @@ package com.client.app.ui.search
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.client.app.data.database.entities.SearchHistory
@@ -33,6 +35,8 @@ class SearchActivity : AppCompatActivity() {
         binding.tvBackSa.setOnClickListener {
             finish()
         }
+        searchViewModel.getAllSearchHistory()
+        Log.e("Activity","call view model")
 
         binding.etSearchSa.doAfterTextChanged {
             if (it.isNullOrEmpty()) {
@@ -80,12 +84,15 @@ class SearchActivity : AppCompatActivity() {
             val adapter = adapterVideo ?: return@observe
             adapter.setVideoList(it)
         }
-        getAllSearchHistory().observe(this@SearchActivity) {
+        listSearchHistory.observe(this@SearchActivity) {
             val adapter = adapterHistory ?: return@observe
             if (it.isNullOrEmpty()) {
                 binding.btDeleteAllSa.visibility = View.GONE
+            }else{
+                adapter.setSearchHistoryList(it)
             }
-            adapter.setSearchHistoryList(it)
+            Log.e("Activity","observer")
+
         }
     }
 

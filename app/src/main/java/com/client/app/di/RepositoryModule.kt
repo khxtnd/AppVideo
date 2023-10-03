@@ -1,6 +1,7 @@
 package com.client.app.di
 
 import android.app.Application
+import com.client.app.DataBaseApplication
 import com.client.app.data.repositories.SearchHistoryRepositoryImpl
 import com.client.app.data.repositories.VideoRepositoryImpl
 import com.client.app.data.repositories.WatchVideoRepositoryImpl
@@ -12,8 +13,8 @@ val videoRepository:VideoRepository by lazy {
     VideoRepositoryImpl(videoApi)
 }
 val searchHistoryRepository:SearchHistoryRepository by lazy {
-    SearchHistoryRepositoryImpl(application = Application())
+    SearchHistoryRepositoryImpl(DataBaseApplication.share)
 }
 val watchVideoRepository:WatchVideoRepository by lazy {
-    WatchVideoRepositoryImpl(application = Application())
+    WatchVideoRepositoryImpl(DataBaseApplication.share)
 }
