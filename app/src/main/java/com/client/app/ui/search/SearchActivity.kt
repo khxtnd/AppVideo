@@ -7,7 +7,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.client.app.data.database.entities.SearchHistory
@@ -36,7 +35,6 @@ class SearchActivity : AppCompatActivity() {
             finish()
         }
         searchViewModel.getAllSearchHistory()
-        Log.e("Activity","call view model")
 
         binding.etSearchSa.doAfterTextChanged {
             if (it.isNullOrEmpty()) {
@@ -88,11 +86,8 @@ class SearchActivity : AppCompatActivity() {
             val adapter = adapterHistory ?: return@observe
             if (it.isNullOrEmpty()) {
                 binding.btDeleteAllSa.visibility = View.GONE
-            }else{
-                adapter.setSearchHistoryList(it)
             }
-            Log.e("Activity","observer")
-
+            adapter.setSearchHistoryList(it)
         }
     }
 

@@ -17,7 +17,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.client.app.R
-import com.client.app.data.database.entities.WatchVideo
+import com.client.app.data.database.entities.WatchedVideo
 import com.client.app.databinding.ActivityDetailBinding
 import com.client.app.di.DetailViewModelFactory
 
@@ -73,8 +73,8 @@ class DetailActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
             binding.tvTotalSharesDa.text = convertNumber(it.totalShares) + " shares"
             binding.tvTotalViewsDa.text = convertNumber(it.totalViews) + " views"
             setExoPlayerDA(it.videoMedia)
-            val watchVideo= WatchVideo(it.id,it.videoTime,it.videoTitle,it.videoImage)
-            detailViewModel.insertWatchVideo(watchVideo)
+            val watchedVideo= WatchedVideo(it.id,it.videoTime,it.videoTitle,it.videoImage)
+            detailViewModel.insertWatchVideo(watchedVideo)
         }
     }
     private fun setControlExo() {

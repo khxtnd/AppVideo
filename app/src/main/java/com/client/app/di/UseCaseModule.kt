@@ -1,13 +1,16 @@
 package com.client.app.di
 
 import com.client.app.domain.usecases.CheckSearchHistoryExitedUseCase
+import com.client.app.domain.usecases.CheckWatchedVideoExitedUseCase
 import com.client.app.domain.usecases.DeleteAllSearchHistoryUseCase
 import com.client.app.domain.usecases.DeleteSearchHistoryUseCase
+import com.client.app.domain.usecases.DeleteWatchedVideoUseCase
 import com.client.app.domain.usecases.GetAllSearchHistoryUseCase
+import com.client.app.domain.usecases.GetAllWatchedVideoUseCase
 import com.client.app.domain.usecases.GetListVideoUseCase
 import com.client.app.domain.usecases.GetVideoInfoUseCase
-import com.client.app.domain.usecases.GetWatchVideoUseCase
 import com.client.app.domain.usecases.InsertSearchHistoryUseCase
+import com.client.app.domain.usecases.InsertWatchedVideoUseCase
 import com.client.app.domain.usecases.SearchListVideoUseCase
 
 val getListVideoUseCase by lazy {
@@ -37,6 +40,15 @@ val insertSearchHistoryUseCase by lazy {
 val checkSearchHistoryExitedUseCase by lazy {
     CheckSearchHistoryExitedUseCase(searchHistoryRepository)
 }
-val getWatchVideoUseCase by lazy {
-    GetWatchVideoUseCase(watchVideoRepository)
+val getAllWatchedVideoUseCase by lazy {
+    GetAllWatchedVideoUseCase(watchedVideoRepository)
+}
+val deleteWatchedVideoUseCase by lazy {
+    DeleteWatchedVideoUseCase(watchedVideoRepository)
+}
+val insertWatchedVideoUseCase by lazy {
+    InsertWatchedVideoUseCase(watchedVideoRepository)
+}
+val checkWatchedVideoExitedUseCase by lazy {
+    CheckWatchedVideoExitedUseCase(watchedVideoRepository)
 }

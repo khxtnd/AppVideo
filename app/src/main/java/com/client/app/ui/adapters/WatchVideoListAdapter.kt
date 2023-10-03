@@ -8,15 +8,15 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.client.app.R
-import com.client.app.data.database.entities.WatchVideo
+import com.client.app.data.database.entities.WatchedVideo
 import com.client.app.databinding.ItemWatchVideoBinding
 
 
 class WatchHistoryAdapter(
-    private val onItemWatchVideoClick: (WatchVideo) -> Unit,
-    private val onDeleteItemWatchVideoClick: (WatchVideo) -> Unit
+    private val onItemWatchVideoClick: (WatchedVideo) -> Unit,
+    private val onDeleteItemWatchVideoClick: (WatchedVideo) -> Unit
 ) : RecyclerView.Adapter<WatchVideoListViewHolder>() {
-    private var list: List<WatchVideo> = listOf()
+    private var list: List<WatchedVideo> = listOf()
     private val MAX_LENGTH = 25;
     override fun getItemCount(): Int {
         return list.size
@@ -52,7 +52,7 @@ class WatchHistoryAdapter(
 
     }
 
-    fun setWatchVideoList(list: List<WatchVideo>) {
+    fun setWatchVideoList(list: List<WatchedVideo>) {
         this.list = list
         notifyDataSetChanged()
     }

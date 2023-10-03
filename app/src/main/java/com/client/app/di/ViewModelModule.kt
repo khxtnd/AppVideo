@@ -8,7 +8,9 @@ import com.client.app.ui.search.SearchViewModel
 
 class HomeViewModelFactory() : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return HomeViewModel(getListVideoUseCase, getWatchVideoUseCase) as T
+        return HomeViewModel(getListVideoUseCase,
+            getAllWatchedVideoUseCase,
+            deleteWatchedVideoUseCase) as T
     }
 }
 
@@ -27,6 +29,8 @@ class SearchViewModelFactory() : ViewModelProvider.Factory {
 
 class DetailViewModelFactory() : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return DetailViewModel(getVideoInfoUseCase, getWatchVideoUseCase) as T
+        return DetailViewModel(getVideoInfoUseCase,
+            checkWatchedVideoExitedUseCase,
+            insertWatchedVideoUseCase) as T
     }
 }

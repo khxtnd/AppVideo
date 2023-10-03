@@ -83,11 +83,10 @@ class SearchViewModel(
     }
 
     fun getAllSearchHistory() = viewModelScope.launch {
-        (listSearchHistory as MediatorLiveData).postValue(
-
-            getAllSearchHistoryUseCase.invoke(Unit).asLiveData().value
-        )
-        Log.e("ViewModel",getAllSearchHistoryUseCase.invoke(Unit).asLiveData().value?.size.toString())
+        val searchHistoryFlow = getAllSearchHistoryUseCase.invoke(Unit)
+        searchHistoryFlow.collect { searchHistoryList ->
+            (listSearchHistory as MediatorLiveData).postValue(searchHistoryList)
+        }
     }
 
     suspend fun deleteAllSearchHistory() = viewModelScope.launch {

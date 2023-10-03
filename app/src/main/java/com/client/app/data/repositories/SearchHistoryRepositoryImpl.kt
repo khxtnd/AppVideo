@@ -28,7 +28,6 @@ class SearchHistoryRepositoryImpl(context: Context) : SearchHistoryRepository {
     }
 
     override fun getAllSearchHistory(): Flow<List<SearchHistory>>{
-        Log.i("RepositoryImpl",searchHistoryDao.getAllSearchHistory().asLiveData().value?.size.toString())
         return searchHistoryDao.getAllSearchHistory()
     }
 

@@ -4,10 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.client.app.data.database.entities.WatchVideo
+import com.client.app.data.database.entities.WatchedVideo
 import com.client.app.domain.entities.Video
+import com.client.app.domain.usecases.CheckSearchHistoryExitedUseCase
+import com.client.app.domain.usecases.CheckWatchedVideoExitedUseCase
 import com.client.app.domain.usecases.GetVideoInfoUseCase
-import com.client.app.domain.usecases.GetWatchVideoUseCase
+import com.client.app.domain.usecases.InsertSearchHistoryUseCase
+import com.client.app.domain.usecases.InsertWatchedVideoUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -15,7 +18,8 @@ import kotlinx.coroutines.withContext
 
 class DetailViewModel(
     private val getVideoInfoUseCase: GetVideoInfoUseCase,
-    private val getWatchVideoUseCase: GetWatchVideoUseCase
+    private val checkWatchedVideoExitedUseCase: CheckWatchedVideoExitedUseCase,
+    private val insertWatchedVideoUseCase: InsertWatchedVideoUseCase
 ) : ViewModel() {
     private var currentPosition: Long = 0
     private var videoId: LiveData<Int> = MediatorLiveData()
@@ -49,14 +53,18 @@ class DetailViewModel(
     fun getCurrentPosition() :Long{
         return currentPosition
     }
-    fun insertWatchVideo(watchVideo: WatchVideo) = viewModelScope.launch {
+    fun insertWatchVideo(watchedVideo: WatchedVideo) = viewModelScope.launch {
         val count = withContext(Dispatchers.IO) {
-            getWatchVideoUseCase.checkWatchVideoExisted(watchVideo.id)
+            checkWatchedVideoExitedUseCase.invoke(
+                CheckWatchedVideoExitedUseCase.Param(watchedVideo.id)
+            )
         }
 
         if (count == 0) {
             withContext(Dispatchers.IO) {
-                getWatchVideoUseCase.insertWatchVideo(watchVideo)
+                insertWatchedVideoUseCase.invoke(
+                    InsertWatchedVideoUseCase.Param(watchedVideo)
+                )
             }
         }
     }

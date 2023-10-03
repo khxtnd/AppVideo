@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
 class GetAllSearchHistoryUseCase(private val searchHistoryRepository: SearchHistoryRepository):
     BaseUseCase<Unit, Flow<List<SearchHistory>>> {
     override suspend fun invoke(param: Unit): Flow<List<SearchHistory>> {
-        Log.e("UseCase",searchHistoryRepository.getAllSearchHistory().asLiveData().value?.size.toString())
         return searchHistoryRepository.getAllSearchHistory()
     }
 

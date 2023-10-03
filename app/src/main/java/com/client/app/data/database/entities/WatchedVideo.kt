@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "watch_history_table")
-class WatchVideo(
+class WatchedVideo(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id_video_col") var id: Int = 0,
     @ColumnInfo(name = "time_col") var time: Int = 0,

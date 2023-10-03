@@ -6,12 +6,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.client.app.data.database.entities.SearchHistory
-import com.client.app.data.database.entities.WatchVideo
+import com.client.app.data.database.entities.WatchedVideo
 
-@Database(entities = [SearchHistory::class, WatchVideo::class], version = 1)
+@Database(entities = [SearchHistory::class, WatchedVideo::class], version = 1)
 abstract class HistoryDatabase : RoomDatabase() {
     abstract fun getSearchHistoryDao(): SearchHistoryDao
-    abstract fun getWatchHistoryDao(): WatchVideoDao
+    abstract fun getWatchHistoryDao(): WatchedVideoDao
 
     companion object {
         @Volatile

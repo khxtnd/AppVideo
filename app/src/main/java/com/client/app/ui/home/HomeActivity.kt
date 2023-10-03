@@ -2,7 +2,6 @@ package com.client.app.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.client.app.R
-import com.client.app.data.database.entities.WatchVideo
+import com.client.app.data.database.entities.WatchedVideo
 import com.client.app.databinding.ActivityHomeBinding
 import com.client.app.di.HomeViewModelFactory
 import com.client.app.ui.adapters.VideoListAdapter
@@ -96,7 +95,7 @@ class HomeActivity : AppCompatActivity() {
                     setRecycleViewVideoHotHa()
                 }
                 R.id.mWatchHistory ->{
-                    setRecycleViewWatchVideoHa()
+                    setRecycleViewWatchedVideoHa()
                 }
             }
             return@setNavigationItemSelectedListener true
@@ -104,6 +103,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setRecycleViewVideoHotHa() {
+        homeViewModel.getAllWatchHistory()
         hotVideoAdapter = VideoListAdapter {
             val intent = Intent(this@HomeActivity, DetailActivity::class.java)
             intent.putExtra("ID_VIDEO", it.id)
@@ -114,7 +114,9 @@ class HomeActivity : AppCompatActivity() {
         observeDataVideoHot()
         supportActionBar?.title = "Video Hot"
     }
-    private fun setRecycleViewWatchVideoHa() {
+
+
+    private fun setRecycleViewWatchedVideoHa() {
         historyVideoAdapter = WatchHistoryAdapter(onItemWatchVideoClick,onItemWatchVideoDelete)
         binding.recHa.layoutManager = LinearLayoutManager(this@HomeActivity)
         binding.recHa.adapter = historyVideoAdapter
@@ -128,7 +130,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
     private fun observeDataWatchVideo() = with(homeViewModel) {
-        getAllWatchHistory().observe(this@HomeActivity) {
+        listWatchedVideo.observe(this@HomeActivity) {
             val adapter = historyVideoAdapter ?: return@observe
             adapter.setWatchVideoList(it)
         }
@@ -147,15 +149,14 @@ class HomeActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-    private val onItemWatchVideoClick: (WatchVideo) -> Unit = {
+    private val onItemWatchVideoClick: (WatchedVideo) -> Unit = {
         val intent = Intent(this@HomeActivity, DetailActivity::class.java)
         intent.putExtra("ID_VIDEO", it.id)
         startActivity(intent)
 
     }
-    private val onItemWatchVideoDelete: (WatchVideo) -> Unit = {
+    private val onItemWatchVideoDelete: (WatchedVideo) -> Unit = {
         homeViewModel.deleteWatchHistory(it)
-        Log.e("HomeActivity","delete")
     }
 }
 
