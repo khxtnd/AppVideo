@@ -4,11 +4,13 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.media3.common.MediaItem
@@ -20,8 +22,9 @@ import com.client.app.R
 import com.client.app.data.database.entities.WatchedVideo
 import com.client.app.databinding.ActivityDetailBinding
 import com.client.app.di.DetailViewModelFactory
+import com.client.app.domain.entities.Resolution
 
-class DetailActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
+class DetailActivity : AppCompatActivity(){
     private lateinit var binding: ActivityDetailBinding
     private val detailViewModel: DetailViewModel by lazy {
         ViewModelProvider(this, DetailViewModelFactory())[DetailViewModel::class.java]
@@ -124,9 +127,25 @@ class DetailActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
             }
         }
         ivSettingCustomExo.setOnClickListener {
-            player.pause()
-            ivPlayCustomExo.setImageResource(R.drawable.ic_play_circle_outline_60)
-            showMenuSetting(it)
+            pauseVideo()
+            showDialogQuality()
+        }
+    }
+
+    private fun showDialogQuality() {
+        detailViewModel.videoInfo.observe(this) {
+            val titleResolutionList= it.list_resolution?.map { it1 ->
+                it1.title
+            }
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            builder
+                .setTitle("Quality")
+                .setItems(titleResolutionList?.toTypedArray()) { _, which ->
+                    setQaVideo(which)
+                }
+
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
         }
     }
 
@@ -169,9 +188,6 @@ class DetailActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
                 }
             }
         })
-        Log.e("setQaVideo",linkVideo)
-
-
     }
 
     private fun playVideo(){
@@ -182,35 +198,8 @@ class DetailActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
         ivPlayCustomExo.setImageResource(R.drawable.ic_play_circle_outline_60)
         player.pause()
     }
-    private fun showMenuSetting(v:View){
-        val popupMenu=PopupMenu(this,v)
-        popupMenu.setOnMenuItemClickListener(this)
-        popupMenu.inflate(R.menu.setting_menu)
-        popupMenu.show()
-    }
-    override fun onMenuItemClick(p0: MenuItem?): Boolean {
-        when(p0?.itemId){
-            R.id.set_144p->{
-                setQaVideo(3)
-            }
-            R.id.set_240p->{
-                setQaVideo(2)
 
-            }
-            R.id.set_360p->{
-                setQaVideo(4)
 
-            }
-            R.id.set_480p->{
-                setQaVideo(1)
-
-            }
-            R.id.set_720p->{
-                setQaVideo(0)
-            }
-        }
-        return true
-    }
 
     private fun setQaVideo(position:Int){
         detailViewModel.videoInfo.observe(this) {

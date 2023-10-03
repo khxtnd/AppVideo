@@ -33,7 +33,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:gravity="center_vertical"
-                android:hint="@string/hint_search"
+                android:hint="@string/search"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -70,6 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
+            android:textColor="@color/white"
             android:background="@drawable/bg_bt_login"
             android:text="@string/delete_all" />
     </LinearLayout>

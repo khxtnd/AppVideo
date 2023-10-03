@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -82,19 +83,34 @@ class HomeActivity : AppCompatActivity() {
                 .into(ivAvatarNav)
         }
         binding.navView.setNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.mLogout ->{
-                    gsc!!.signOut().addOnCompleteListener {
-                        val intent = Intent(this@HomeActivity, LoginActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(intent)
-                        finish()
-                    }
+            when (it.itemId) {
+                R.id.mLogout -> {
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                    builder
+                        .setTitle(R.string.logout)
+                        .setIcon(R.drawable.ic_logout_40)
+                        .setMessage(R.string.message_logout)
+                        .setPositiveButton(R.string.cancel) { dialog, _ ->
+                            dialog.cancel()
+                        }
+                        .setNegativeButton(R.string.ok) { _, _ ->
+                            gsc!!.signOut().addOnCompleteListener {
+                                val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                startActivity(intent)
+                                finish()
+                            }
+                        }
+                    val dialog: AlertDialog = builder.create()
+                    dialog.show()
                 }
-                R.id.mVideoHot ->{
+
+                R.id.mVideoHot -> {
                     setRecycleViewVideoHotHa()
                 }
-                R.id.mWatchHistory ->{
+
+                R.id.mWatchHistory -> {
                     setRecycleViewWatchedVideoHa()
                 }
             }
